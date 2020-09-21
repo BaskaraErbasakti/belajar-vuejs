@@ -9,7 +9,7 @@
                 <button type="button" class="btn m-0" data-toggle="collapse" href="#empty">
                     <h1 class="tittle">Food Items</h1>
                 </button>            
-                <form v-on:submit="search"><input type="text" class="form-control" id="searching" v-model="form.name"><button class="btn" type="submit" >Search</button></form>
+                <form v-on:submit="search"><input type="text" class="form-control" id="searching" v-model="form.name"><button class="btn border" type="submit" >Search</button></form>
             </header>
         <div class="col-4 d-flex justify-content-center align-items-center shadow-sm py-4">
           <h1 class="m-0">cart</h1>
@@ -91,7 +91,7 @@
                 </div>
               </div>
             </div>
-            <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal1" data-whatever="@mdo">EDIT</button>
+            <button type="button" class="btn bg-primary my-2 text-white" data-toggle="modal" data-target="#exampleModal1" data-whatever="@mdo">EDIT</button>
             <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -167,7 +167,7 @@
                 </div>
               </div>
             </div>
-            <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal2" data-whatever="@mdo">DELETE</button>
+            <button type="button" class="btn bg-danger text-white my-2" data-toggle="modal" data-target="#exampleModal2" data-whatever="@mdo">DELETE</button>
             <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabe2" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">

@@ -7,6 +7,7 @@ import home from "./views/home/home"
 import history from "./views/history/history"
 
 const mainRouter = new VueRouter({
+    mode : 'history',
     routes: [
         {
             path: "/",
