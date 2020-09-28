@@ -9,7 +9,7 @@
                 <button type="button" class="btn m-0" data-toggle="collapse" href="#empty">
                     <h1 class="tittle">Food Items</h1>
                 </button>            
-                <form v-on:submit="search"><input type="text" class="form-control" id="searching" v-model="form.name"><button class="btn border" type="submit" >Search</button></form>
+                <input type="text" v-model="search" placeholder="Search menu">
             </header>
         <div class="col-4 d-flex justify-content-center align-items-center shadow-sm py-4">
           <h1 class="m-0">cart</h1>
@@ -209,7 +209,7 @@
             </div>
           </div>
           <main class="d-flex justify-content-center align-items-baseline flex-wrap">
-            <div class="col" v-for="item in items" :key="item.id">
+            <div class="col" v-for="item in filterMenu" :key="item.id">
               <img class="btn p-0" role="button" data-toggle="collapse" :data-target="item.target" :src="item.images" width="250px" height="200px" :alt="item.image_tittle">
               <h2 class="font-weight-normal">{{item.name}}</h2>
               <h2>Rp. {{item.price}}</h2>
@@ -331,6 +331,7 @@ export default {
   data() {
     return {
       items: [],
+      search: '',
       counter: 1,
       cart: 0,
       total_price: 0,
@@ -410,17 +411,15 @@ export default {
         console.log(e)
       }
     },
-    async search() {
-      try {
-        const response = await axios({
-          method: "GET",
-          url: process.env.DB_SEARCH,
-        })
-        this.items = response.data
-      } catch (e) {
-        console.log(e)
-      }
-    },
+  },
+
+  computed : {
+    filterMenu : function () {
+      return this.items.filter((item) => {
+        return item.name.match(this.search)
+      })
+    }
+
   },
 
   mounted() {
