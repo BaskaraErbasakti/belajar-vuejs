@@ -1,3 +1,5 @@
+def builderDocker
+def CommitHash
 
 pipeline {
     
