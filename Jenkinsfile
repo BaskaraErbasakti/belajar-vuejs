@@ -71,7 +71,20 @@ pipeline {
                 }
             } 
             steps {
-                echo 'Deploy...' 
+                sshPublisher(
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: 'Developmen',
+                            verbose: false,
+                            transfers: [
+                                sshTransfer(
+                                    execCommand: 'docker pull baskaraerbasakti/vue:master; docker kill vue; docker run -d --rm --name vue -p 8080:80 baskaraerbasakti/vue:master',
+                                    execTimeout: 120000,
+                                )
+                            ]
+                        )
+                    ]
+                ) 
             }
         }
     }
