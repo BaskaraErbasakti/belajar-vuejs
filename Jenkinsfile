@@ -11,9 +11,21 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                echo 'Build...' 
+                nodejs("node12") {
+                    sh 'yarn install'
+                } 
             }
         }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    CommitHash = sh (script : "git log -n 1 --pretty=format:'%H'", returnStdout: true)
+                    builderDocker = docker.build("baskaraerbasakti/vue:${CommitHash}")
+                }
+            }
+        }
+
         stage('Test') {
             when {
                 expression {
@@ -21,9 +33,12 @@ pipeline {
                 }
             }
             steps {
-                echo 'Testing...'
+                builderDocker.inside {
+                    sh 'echo passed'
+                }
             }
         }
+
         stage('Deploy') {
             when {
                 expression {
