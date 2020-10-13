@@ -67,7 +67,7 @@ pipeline {
         stage('Deploy on developmen') {
             when {
                 expression {
-                    params.CICD == 'CICD'|| GIT_BRANCH == 'Dev'
+                    params.CICD == 'CICD' && GIT_BRANCH == 'Dev'
                 }
             } 
             steps {
@@ -91,7 +91,7 @@ pipeline {
         stage('Deploy on production') {
             when {
                 expression {
-                    params.CICD == 'CICD'|| GIT_BRANCH == 'Prod'
+                    params.CICD == 'CICD' && GIT_BRANCH == 'Prod'
                 }
             } 
             steps {
