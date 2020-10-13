@@ -64,10 +64,10 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy on developmen') {
             when {
                 expression {
-                    params.CICD == 'CICD'
+                    params.CICD == 'CICD'|| GIT_BRANCH == 'Dev'
                 }
             } 
             steps {
@@ -78,7 +78,31 @@ pipeline {
                             verbose: false,
                             transfers: [
                                 sshTransfer(
-                                    execCommand: 'docker pull baskaraerbasakti/vue:master; docker kill vue; docker run -d --rm --name vue -p 8080:80 baskaraerbasakti/vue:master',
+                                    execCommand: 'docker pull baskaraerbasakti/vue:Dev; docker kill vue; docker run -d --rm --name vue -p 8080:8080 baskaraerbasakti/vue:Dev',
+                                    execTimeout: 120000,
+                                )
+                            ]
+                        )
+                    ]
+                ) 
+            }
+        }
+
+        stage('Deploy on production') {
+            when {
+                expression {
+                    params.CICD == 'CICD'|| GIT_BRANCH == 'Prod'
+                }
+            } 
+            steps {
+                sshPublisher(
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: 'Production',
+                            verbose: false,
+                            transfers: [
+                                sshTransfer(
+                                    execCommand: 'docker pull baskaraerbasakti/vue:Prod; docker kill vue; docker run -d --rm --name vue -p 8080:8080 baskaraerbasakti/vue:Prod',
                                     execTimeout: 120000,
                                 )
                             ]
